@@ -2,7 +2,7 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import make_column_transformer
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import Pipeline
 
 # for model training, tuning, and evaluation
 import xgboost as xgb
@@ -60,10 +60,13 @@ param_grid = {
 }
 
 # Create pipeline
-model_pipeline = make_pipeline(preprocessor, xgb_model)
+pipeline = Pipeline(steps=[
+    ("preprocessor", preprocessor),
+    ("xgbclassifier", xgb_model)
+])
 
 # Recall scorer
-recall_scorer = make_scorer(recall_score, pos_label=1)
+recall = make_scorer(recall, pos_label=1)
 
 with mlflow.start_run():
     grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
