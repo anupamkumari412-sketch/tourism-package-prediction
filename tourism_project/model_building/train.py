@@ -72,8 +72,8 @@ with MLflow.start_run():
 
 # Log CV recall for all parameter combinations
     results = grid_search.cv_results_
-       for i in range(len(results['params'])):
-        with mlflow.start_run(nested=True):
+    for i in range(len(results['params'])):
+      with mlflow.start_run(nested=True):
             mlflow.log_params(results['params'][i])
             mlflow.log_metric("cv_mean_recall", results['mean_test_score'][i])
             mlflow.log_metric("cv_std_recall", results['std_test_score'][i])
