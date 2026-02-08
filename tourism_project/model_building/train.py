@@ -18,7 +18,7 @@ from huggingface_hub.utils import RepositoryNotFoundError
 
 import mlflow
 
-# MLflow setup
+# mlflow setup
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("travel-package-prediction-experiment")
 
