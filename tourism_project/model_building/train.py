@@ -114,9 +114,9 @@ api = HfApi(token=os.getenv("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"))
 
 # Step 1: Check if the space exists
 try:
-        api.repo_info(repo_id=repo_id, repo_type="model")
-    except RepositoryNotFoundError:
-        create_repo(repo_id=repo_id, repo_type="model", private=False)
+  api.repo_info(repo_id=repo_id, repo_type="model")
+except RepositoryNotFoundError:
+  create_repo(repo_id=repo_id, repo_type="model", private=False)
 
     api.upload_file(
         path_or_fileobj=model_path,
