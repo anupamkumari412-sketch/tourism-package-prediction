@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 # for model training, tuning, and evaluation
 import xgboost as xgb
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report, recall_score, make_scorer
+from sklearn.metrics import classification_report, recall, make_scorer
 
 # for model serialization
 import joblib
@@ -69,7 +69,13 @@ pipeline = Pipeline(steps=[
 recall = make_scorer(recall, pos_label=1)
 
 with mlflow.start_run():
-    grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
+    grid_search = GridSearchCV(
+    estimator=pipeline,
+    param_grid=param_grid,
+    cv=5,
+    scoring='recall',
+    n_jobs=-1
+)  # Grid Search with Cross Validation
     grid_search.fit(Xtrain, ytrain)
 
 # Log CV recall for all parameter combinations
