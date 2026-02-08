@@ -65,7 +65,7 @@ model_pipeline = make_pipeline(preprocessor, xgb_model)
 # Recall scorer
 recall_scorer = make_scorer(recall_score, pos_label=1)
 
-with MLflow.start_run():
+with mlflow.start_run():
     grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
     grid_search.fit(Xtrain, ytrain)
 
