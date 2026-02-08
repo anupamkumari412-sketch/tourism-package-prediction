@@ -35,7 +35,7 @@ label_encoder = LabelEncoder()
 df['Designation'] = df['Designation'].map(designation_map)
 
 # One-Hot Encoding
-one_hot_cols = ['TypeofContact', 'Occupation', 'Gender', 'MaritalStatus' , 'productPitched']
+one_hot_cols = ['TypeofContact', 'Occupation', 'Gender', 'MaritalStatus' , 'ProductPitched']
 df = pd.get_dummies(df, columns=one_hot_cols, drop_first=True)
 
 target_col = 'ProdTaken'
