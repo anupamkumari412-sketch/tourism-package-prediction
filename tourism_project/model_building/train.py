@@ -117,7 +117,7 @@ try:
 except RepositoryNotFoundError:
   create_repo(repo_id=repo_id, repo_type="model", private=False)
 
-    api.upload_file(
+api.upload_file(
         path_or_fileobj=model_path,
         path_in_repo=model_path,
         repo_id=repo_id,
