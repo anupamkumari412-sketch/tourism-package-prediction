@@ -123,4 +123,4 @@ except RepositoryNotFoundError:
         path_in_repo=model_path,
         repo_id=repo_id,
         repo_type="model"
-    )
+        )
