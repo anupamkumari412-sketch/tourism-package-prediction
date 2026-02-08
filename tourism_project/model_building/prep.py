@@ -32,7 +32,6 @@ designation_map = {
 # Encode categorical columns
 # label encoding
 label_encoder = LabelEncoder()
-df['ProductPitched'] = df['ProductPitched'].map(product_pitched_map)
 df['Designation'] = df['Designation'].map(designation_map)
 
 # One-Hot Encoding
