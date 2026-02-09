@@ -1,13 +1,14 @@
+%%writefile tourism_project/model_building/train.py
 # for data manipulation
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import make_column_transformer
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
 
 # for model training, tuning, and evaluation
 import xgboost as xgb
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report, recall, make_scorer
+from sklearn.metrics import classification_report, recall_score, make_scorer
 
 # for model serialization
 import joblib
@@ -18,7 +19,7 @@ from huggingface_hub.utils import RepositoryNotFoundError
 
 import mlflow
 
-# mlflow setup
+# MLflow setup
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("travel-package-prediction-experiment")
 
@@ -41,9 +42,10 @@ categorical_features = ['TypeofContact', 'Occupation', 'Gender' , 'ProductPitche
 class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
 
 
+# Preprocessing pipeline
 preprocessor = make_column_transformer(
     (StandardScaler(), numeric_features),
-    remainder="passthrough"
+    (OneHotEncoder(handle_unknown='ignore'), categorical_features)
 )
 
 # Define XGBoost Classifier (Model)
@@ -60,22 +62,13 @@ param_grid = {
 }
 
 # Create pipeline
-pipeline = Pipeline(steps=[
-    ("preprocessor", preprocessor),
-    ("xgbclassifier", xgb_model)
-])
+model_pipeline = make_pipeline(preprocessor, xgb_model)
 
 # Recall scorer
-recall = make_scorer(recall, pos_label=1)
+recall_scorer = make_scorer(recall_score, pos_label=1)
 
 with mlflow.start_run():
-    grid_search = GridSearchCV(
-    estimator=pipeline,
-    param_grid=param_grid,
-    cv=5,
-    scoring='recall',
-    n_jobs=-1
-)  # Grid Search with Cross Validation
+    grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
     grid_search.fit(Xtrain, ytrain)
 
 # Log CV recall for all parameter combinations
@@ -118,7 +111,7 @@ with mlflow.start_run():
 repo_id = "anupam-roy123/tourism-package-prediction"
 repo_type = "model"
 
-api = HfApi(token=os.getenv("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"))
+api = HfApi(token=os.getenv("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"))
 
 # Step 1: Check if the space exists
 try:
