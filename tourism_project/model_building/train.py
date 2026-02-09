@@ -44,7 +44,7 @@ class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
 # Preprocessing pipeline
 preprocessor = make_column_transformer(
     (StandardScaler(), numeric_features),
-    (OneHotEncoder(handle_unknown='ignore'), categorical_features)
+    remainder="passthrough"
 )
 
 # Define XGBoost Classifier (Model)
@@ -67,7 +67,7 @@ model_pipeline = make_pipeline(preprocessor, xgb_model)
 recall_scorer = make_scorer(recall_score, pos_label=1)
 
 with mlflow.start_run():
-    grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
+    grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
     grid_search.fit(Xtrain, ytrain)
 
 # Log CV recall for all parameter combinations
