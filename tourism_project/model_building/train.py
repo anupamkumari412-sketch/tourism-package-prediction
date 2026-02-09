@@ -34,7 +34,7 @@ ytrain = pd.read_csv(ytrain_path)
 ytest = pd.read_csv(ytest_path)
 
 # Define features
-numeric_features = ['MonthlyIncome' , 'age', 'CityTier', 'DurationOfPitch', 'NumberOfPersonVisiting' , 'PreferredPropertyStar' , 'NumberOfFollowups' , 'NumberOfTrips', 'PitchSatisfactionScore' , 'NumberOfChildrenVisiting' , 'Passport' , 'OwnCar']
+numeric_features = ['MonthlyIncome' , 'Age', 'CityTier', 'DurationOfPitch', 'NumberOfPersonVisiting' , 'PreferredPropertyStar' , 'NumberOfFollowups' , 'NumberOfTrips', 'PitchSatisfactionScore' , 'NumberOfChildrenVisiting' , 'Passport' , 'OwnCar']
 categorical_features = ['TypeofContact', 'Occupation', 'Gender' , 'ProductPitched' , 'MaritalStatus' , 'Designation']
 
 # Handle class imbalance
