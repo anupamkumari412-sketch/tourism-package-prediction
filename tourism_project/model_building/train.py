@@ -18,7 +18,7 @@ from huggingface_hub.utils import RepositoryNotFoundError
 
 import mlflow
 
-# MLflow setup
+# mlflow setup
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("travel-package-prediction-experiment")
 
@@ -67,7 +67,7 @@ model_pipeline = make_pipeline(preprocessor, xgb_model)
 recall_scorer = make_scorer(recall_score, pos_label=1)
 
 with mlflow.start_run():
-    grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='recall_scorer', n_jobs=-1) # Grid Search with Cross Validation
+    grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring=recall_scorer, n_jobs=-1) # Grid Search with Cross Validation
     grid_search.fit(Xtrain, ytrain)
 
 # Log CV recall for all parameter combinations
