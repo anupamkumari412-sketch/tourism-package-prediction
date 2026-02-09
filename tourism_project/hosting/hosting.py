@@ -1,7 +1,7 @@
 from huggingface_hub import HfApi
 import os
 
-api = HfApi(token=os.getenv("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"))
+api = HfApi(token=os.getenv("HF_TOKEN"))
 api.upload_folder(
     folder_path="tourism_project/deployment",     # the local folder containing your files
     repo_id="anupam-roy123/tourism-package-prediction",          # the target repo
