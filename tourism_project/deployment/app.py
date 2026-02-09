@@ -18,7 +18,7 @@ Please enter the required information below to get a prediction.
 """)
 
 # User input
-age = st.number_input("age", min_value=19, max_value=61, value=30, step=1)
+Age = st.number_input("Age", min_value=19, max_value=61, value=30, step=1)
 Gender = st.selectbox("Gender", ["male", "female"])
 Type_of_Contact = st.selectbox("Type of Contact", ["Company Invited", "Self Enquiry"])
 Number_Of_Children_Visiting = st.number_input("Number Of Children Visiting", min_value=0, max_value=3, value=0, step=1)
@@ -40,7 +40,7 @@ Monthly_Income = st.number_input("Monthly Income", min_value=16052, max_value=34
 
 # Assemble input into DataFrame
 input_data = pd.DataFrame([{
-    'age': age,
+    'Age': Age,
     'Gender': Gender,
     'Type_of_Contact': Type_of_Contact,
     'Number_Of_Children_Visiting' : Number_Of_Children_Visiting ,
